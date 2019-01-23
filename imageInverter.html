@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>reverseOfImage</title>
+
+	<style type="text/css">
+		#container{ width: 100%; }
+		#imageContainer{ float: left; }
+		#canvasContainer{ float: right; }
+	</style>
+</head>
+<body onload="reverseOfImage()">
+	<div id="container">
+		<div id="imageContainer">
+			<img id="image" src="cualquierImagen.jpg">
+		</div>
+
+		<div id="canvasContainer">
+			
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		let reverse = (string => string.split("").reverse().join(""));
+		let binary8 = (string => string.padStart(8, "0"));
+
+		function reverseOfImage(){
+			let image = document.getElementById('image');
+
+			let canvasContainer = document.getElementById('canvasContainer');
+			canvasContainer.innerHTML = `<canvas id="canvas" width="${image.width}" height="${image.height}">`;
+
+			let canvas = document.getElementById('canvas');
+
+			let ctx = canvas.getContext('2d');
+
+			ctx.drawImage(image, 0, 0);
+
+			let imageData = ctx.getImageData(0, 0, image.width, image.height);
+			let data = imageData.data;
+
+			console.log(data);
+
+			for(let i = 0; i < data.length; i += 4){
+				let allData = binary8(data[i].toString(2)) + binary8(data[i + 1].toString(2)) + binary8(data[i + 2].toString(2));
+				let allDataReverse = reverse(allData);
+
+				data[i] = parseInt(allDataReverse.substr(0, 8), 2);
+				data[i + 1] = parseInt(allDataReverse.substr(8, 8), 2);
+				data[i + 2] = parseInt(allDataReverse.substr(16, 8), 2);
+			}
+
+			console.log(data);
+
+			ctx.putImageData(imageData, 0, 0);
+		}
+	</script>
+</body>
+</html>
