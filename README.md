@@ -8,5 +8,5 @@ Pero lo he provado en firefox y va bien !
 
 ### Para cambiar la imagen solo hay que modifica el src:
 ```html
-<img id="image" src="cualquierImagen.jpeg">
+<img id="image" src="cualquierImagen.jpg">
 ```
